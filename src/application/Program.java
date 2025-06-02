@@ -37,8 +37,8 @@ public class Program {
 
             Date now = new Date();
 
-            if (entrada.before(now) || saida.before(now)) {
-                System.out.println("ERRO NA RESERVA. A DATA DE ATUALIZAÇÕES PRECISA SER FUTURA!");
+            if (entrada.before(now) && saida.before(now)) {
+                System.out.println("ERRO NA RESERVA. A DATA DE ATUALIZAÇÃO PRECISA SER FUTURA!");
             } else if (!saida.after(entrada)) {
                 System.out.println("Erro na reserva. A data de saída precisa ser posterior a da entrada!");
             } else {
