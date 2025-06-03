@@ -15,6 +15,11 @@ public class Reserva {
 
     private static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
+    /**
+     throws = Propaga a exceção ao invés
+     de tratá-la.
+     throw = lança a exceção e "corta" o método
+     **/
     public Reserva(Integer numeroQuarto, Date entrada, Date saida) throws DomainException {
         if (!saida.after(entrada)) {
             throw new DomainException("A data de saída precisa ser posterior a da entrada!");
