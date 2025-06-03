@@ -1,5 +1,7 @@
 package model.entities;
 
+import exceptions.DomainException;
+
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
@@ -13,7 +15,10 @@ public class Reserva {
 
     private static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-    public Reserva(Integer numeroQuarto, Date entrada, Date saida) {
+    public Reserva(Integer numeroQuarto, Date entrada, Date saida) throws DomainException {
+        if (!saida.after(entrada)) {
+            throw new DomainException("A data de saída precisa ser posterior a da entrada!");
+        }
         this.numeroQuarto = numeroQuarto;
         this.entrada = entrada;
         this.saida = saida;
@@ -41,16 +46,15 @@ public class Reserva {
         return TimeUnit.DAYS.convert(dif, TimeUnit.MILLISECONDS); //Convertendo milissegundos em dias
     }
 
-    public String atualizar(Date entrada, Date saida){
+    public void atualizar(Date entrada, Date saida) throws DomainException{
         Date now = new Date();
         if (entrada.before(now) && saida.before(now)) {
-            return "A DATA DE ATUALIZAÇÃO PRECISA SER FUTURA!";
+            throw new DomainException("A DATA DE ATUALIZAÇÃO PRECISA SER FUTURA!");
         } if (!saida.after(entrada)) {
-           return "A data de saída precisa ser posterior a da entrada!";
+           throw new DomainException("A data de saída precisa ser posterior a da entrada!");
         }
         this.entrada = entrada;
         this.saida = saida;
-        return null;
     }
 
     @Override
